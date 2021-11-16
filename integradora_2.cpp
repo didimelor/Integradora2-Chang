@@ -8,7 +8,7 @@
 using namespace std;
 
 
-int obtenerNumeroDeStr(string line, int & pos){ 
+int obtenerNumeroDeStr(string line, int & pos){
 	int initPos = pos;
 	while(int(line[pos]) > 47 && int(line[pos]) < 58 && pos < line.length() - 1){
 		pos++;
@@ -64,6 +64,14 @@ int main(){
 	leerListaPares(distanciaCentrales, MyReadFile, numColonias);
 
 	MyReadFile.close();
-	
+
+	/*
+		TODO:
+		0. Read data ✅
+		1. Floyd Warshall 📌
+		2. Max Flow 📌
+		3. Function to get closest pair of coordenates 📌
+	*/
+
 	return 0;
 }
