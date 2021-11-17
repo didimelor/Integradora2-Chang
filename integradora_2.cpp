@@ -3,14 +3,20 @@
 #include <string>
 #include <vector>
 #include <algorithm>
+<<<<<<< HEAD
 #include <unordered_map>
 #include <cstdlib> 			// for abs function.
 #include <math.h>				// for sqrt
+=======
+#include <unordered_set>
+#include <cstdlib> // for abs function.
+>>>>>>> fef7ff6835ac8917368df7dee6822633a6f062e8
 
 using namespace std;
 
+//-------------------------Construir matriz y vectores con el input del txt file---------------------------
 
-int obtenerNumeroDeStr(string line, int & pos){
+int obtenerNumeroDeStr(string line, int & pos){ 
 	int initPos = pos;
 	while(int(line[pos]) > 47 && int(line[pos]) < 58 && pos < line.length() - 1){
 		pos++;
@@ -32,10 +38,10 @@ void leerMat(vector< vector<int> > & mat, ifstream & MyReadFile, int numColonias
 		}
 		i = 0;
 	}
+
 }
 
-// no se utiliza numColonias aqui
-void leerListaPares(vector< pair<int, int> > & vec, ifstream & MyReadFile, int numColonias){
+void leerListaPares(vector< pair<int, int> > & vec, ifstream & MyReadFile){
 	string inputRow; //Guarda la linea del input de archivo de texto
 	int i = 1;
 	int currNum;
@@ -45,11 +51,25 @@ void leerListaPares(vector< pair<int, int> > & vec, ifstream & MyReadFile, int n
 		i++;
 		secondNum = obtenerNumeroDeStr(inputRow, i);
 		vec.push_back(make_pair(currNum, secondNum));
-		//cout << currNum << ", " << secondNum << endl;
- 		i = 1;
+		i = 1;
 	}
 }
 
+//---------------------------Prim: Árbol minimo de expansión-----------------------
+
+int findMin(vector<int> vec, unordered_set <int> visitados){
+	int smaller = 100000;
+	int smallIndx = -1;
+	for(int i = 0; i < vec.size(); i++){
+		if(vec[i] < smaller && vec[i] > 0 && visitados.find(i) == visitados.end()){
+			smaller = vec[i];
+			smallIndx = i;
+		}
+	}
+	return smallIndx;
+}
+
+<<<<<<< HEAD
 int getDistance(pair<int, int> a, pair<int, int> b){
 
 	int distance;
@@ -59,6 +79,29 @@ int getDistance(pair<int, int> a, pair<int, int> b){
 
 // Function to get closest pair of coordenates - Section 4
 pair<int, int> closestCentral(vector<pair<int, int>> vec){
+=======
+vector<pair<int, int> > primMST(vector<vector<int>> mat){
+
+	vector<pair<int, int> > MST;
+	unordered_set <int> visitados;
+	int first = 0;
+	visitados.insert(first);
+	int n = mat.size();
+	
+	while(visitados.size() < n){
+		int connection = findMin(mat[first], visitados);
+		cout << first << ": " << connection << endl;
+		MST.push_back(make_pair(first, connection));
+		visitados.insert(connection);
+		first = connection;
+	}
+	return MST;
+}
+
+//----------------------Función para obtener las coordenadas más cercanas - Section 4---------------
+
+vector<pair<int, int>> closestCentral(vector<pair<int, int>> vec){
+>>>>>>> fef7ff6835ac8917368df7dee6822633a6f062e8
 
 	pair<int, int> closest; // pair to hold the indexes of the closest coordenates.
 	int distance = INT_MAX; // lowest possible distance.
@@ -90,6 +133,8 @@ pair<int, int> closestCentral(vector<pair<int, int>> vec){
 	return closest;
 }
 
+//-------------------------------------------Main--------------------------------------------------
+
 int main(){
 	string c;
 	ifstream MyReadFile("inpIntegradora2.txt");
@@ -101,22 +146,36 @@ int main(){
 	vector< vector<int> > flujoEntreColonias (numColonias, vector<int> (numColonias, -1));
 	vector< pair<int, int> > distanciaCentrales;
 
-
+	//Leer matrices y lista de input
 	leerMat(distanciaEntreColonias, MyReadFile, numColonias);
 	leerMat(flujoEntreColonias, MyReadFile, numColonias);
-	leerListaPares(distanciaCentrales, MyReadFile, numColonias);
+	leerListaPares(distanciaCentrales, MyReadFile);
 
-	MyReadFile.close();
+	MyReadFile.close();//Termina de leer el input
 
+	//-------------Sección 1: Árbol de expansion minimo de Prim--------------
+	vector<pair<int,int>> MST = primMST(distanciaEntreColonias);
+	cout << "Cableado optimo" << endl;
+	for(int i = 0; i < MST.size(); i++){
+		cout << "(" << MST[i].first << ", " << MST[i].second << ")" << endl; 
+	}
+
+	//-------------Sección 4: Coordenadas más cercanas--------------
 	closestCentral(distanciaCentrales);
-
-	/*
-		TODO:
-		0. Read data ✅
-		1. Floyd Warshall 📌
-		2. Max Flow 📌
-		3. Function to get closest pair of coordenates 📌
-	*/
-
+	
+	
 	return 0;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
