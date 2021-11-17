@@ -3,20 +3,19 @@
 #include <string>
 #include <vector>
 #include <algorithm>
-<<<<<<< HEAD
 #include <unordered_map>
+#include <unordered_set>
 #include <cstdlib> 			// for abs function.
 #include <math.h>				// for sqrt
+<<<<<<< HEAD
 =======
-#include <unordered_set>
-#include <cstdlib> // for abs function.
->>>>>>> fef7ff6835ac8917368df7dee6822633a6f062e8
+>>>>>>> mikeLab1
 
 using namespace std;
 
 //-------------------------Construir matriz y vectores con el input del txt file---------------------------
 
-int obtenerNumeroDeStr(string line, int & pos){ 
+int obtenerNumeroDeStr(string line, int & pos){
 	int initPos = pos;
 	while(int(line[pos]) > 47 && int(line[pos]) < 58 && pos < line.length() - 1){
 		pos++;
@@ -56,6 +55,7 @@ void leerListaPares(vector< pair<int, int> > & vec, ifstream & MyReadFile){
 }
 
 //---------------------------Prim: Árbol minimo de expansión-----------------------
+=======
 
 int findMin(vector<int> vec, unordered_set <int> visitados){
 	int smaller = 100000;
@@ -69,17 +69,6 @@ int findMin(vector<int> vec, unordered_set <int> visitados){
 	return smallIndx;
 }
 
-<<<<<<< HEAD
-int getDistance(pair<int, int> a, pair<int, int> b){
-
-	int distance;
-	distance = sqrt(pow((b.first - a.first), 2) + pow((b.second - a.second), 2));
-	return distance;
-}
-
-// Function to get closest pair of coordenates - Section 4
-pair<int, int> closestCentral(vector<pair<int, int>> vec){
-=======
 vector<pair<int, int> > primMST(vector<vector<int>> mat){
 
 	vector<pair<int, int> > MST;
@@ -87,7 +76,7 @@ vector<pair<int, int> > primMST(vector<vector<int>> mat){
 	int first = 0;
 	visitados.insert(first);
 	int n = mat.size();
-	
+
 	while(visitados.size() < n){
 		int connection = findMin(mat[first], visitados);
 		cout << first << ": " << connection << endl;
@@ -100,9 +89,16 @@ vector<pair<int, int> > primMST(vector<vector<int>> mat){
 
 //----------------------Función para obtener las coordenadas más cercanas - Section 4---------------
 
-vector<pair<int, int>> closestCentral(vector<pair<int, int>> vec){
->>>>>>> fef7ff6835ac8917368df7dee6822633a6f062e8
+int getDistance(pair<int, int> a, pair<int, int> b){
 
+	int distance;
+	distance = sqrt(pow((b.first - a.first), 2) + pow((b.second - a.second), 2));
+	return distance;
+}
+
+pair<int, int> closestCentral(vector<pair<int, int>> vec){
+
+>>>>>>> mikeLab1
 	pair<int, int> closest; // pair to hold the indexes of the closest coordenates.
 	int distance = INT_MAX; // lowest possible distance.
 	int currDistance = 1; // current distance.
@@ -126,7 +122,7 @@ vector<pair<int, int>> closestCentral(vector<pair<int, int>> vec){
 		}
 	}
 
-	//cout << closest.first << ", " << closest.second << endl;
+	cout << closest.first << ", " << closest.second << endl;
 	//cout << distance << " vs " << currDistance << endl;
 	//cout << closest[0].first << ", " << closest[0].second << endl;
 	//cout << closest[1].first << ", " << closest[1].second << endl;
@@ -157,25 +153,12 @@ int main(){
 	vector<pair<int,int>> MST = primMST(distanciaEntreColonias);
 	cout << "Cableado optimo" << endl;
 	for(int i = 0; i < MST.size(); i++){
-		cout << "(" << MST[i].first << ", " << MST[i].second << ")" << endl; 
+		cout << "(" << MST[i].first << ", " << MST[i].second << ")" << endl;
 	}
 
 	//-------------Sección 4: Coordenadas más cercanas--------------
 	closestCentral(distanciaCentrales);
-	
-	
+
+
 	return 0;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
