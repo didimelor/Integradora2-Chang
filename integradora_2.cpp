@@ -73,6 +73,7 @@ vector<pair<int, int> > primMST(vector<vector<int>> mat){
 	
 	while(visitados.size() < n){
 		int connection = findMin(mat[first], visitados);
+		cout << first << ": " << connection << endl;
 		MST.push_back(make_pair(first, connection));
 		visitados.insert(connection);
 		first = connection;
