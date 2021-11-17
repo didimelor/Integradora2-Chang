@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <unordered_map>
 #include <cstdlib> 			// for abs function.
+#include <math.h>				// for sqrt
 
 using namespace std;
 
@@ -49,10 +50,17 @@ void leerListaPares(vector< pair<int, int> > & vec, ifstream & MyReadFile, int n
 	}
 }
 
-// Function to get closest pair of coordenates - Section 4
-vector<pair<int, int>> closestCentral(vector<pair<int, int>> vec){
+int getDistance(pair<int, int> a, pair<int, int> b){
 
-	vector<pair<int, int>> closest(2); // vector to hold the pair of closest coordenates.
+	int distance;
+	distance = sqrt(pow((b.first - a.first), 2) + pow((b.second - a.second), 2));
+	return distance;
+}
+
+// Function to get closest pair of coordenates - Section 4
+pair<int, int> closestCentral(vector<pair<int, int>> vec){
+
+	pair<int, int> closest; // pair to hold the indexes of the closest coordenates.
 	int distance = INT_MAX; // lowest possible distance.
 	int currDistance = 1; // current distance.
 
@@ -64,20 +72,18 @@ vector<pair<int, int>> closestCentral(vector<pair<int, int>> vec){
 
 		for (int j = i + 1; j < vec.size(); ++j){
 
-			currDistance = (abs(vec[i].first - vec[j].first) + abs(vec[i].second - vec[j].second));
+			currDistance = getDistance(vec[i], vec[j]);
 
 			// For the very first iteration this is always true.
 			if (currDistance < distance){
-				closest[0] = vec[i];
-				closest[1] = vec[j];
+				closest.first = i;
+				closest.second = j;
 				distance = currDistance;
 			}
 		}
 	}
 
-	// TODO: can be a pair<int, int>, return the indexes to find inside vec the solution.
-	// for the input i = 1 and y = 2
-
+	//cout << closest.first << ", " << closest.second << endl;
 	//cout << distance << " vs " << currDistance << endl;
 	//cout << closest[0].first << ", " << closest[0].second << endl;
 	//cout << closest[1].first << ", " << closest[1].second << endl;
